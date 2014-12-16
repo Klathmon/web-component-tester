@@ -155,12 +155,12 @@ BrowserRunner.prototype.done = function done(error) {
     var username = this.options.sauce.username;
     var accessKey = this.options.sauce.accessKey;
     var httpOpts = {
-      hostname: "saucelabs.com",
-      method: "PUT",
-      path: "/rest/v1/" + username + "/jobs/" + this.sessionId,
-      auth: username + ":" + accessKey,
+      hostname: 'saucelabs.com',
+      method: 'PUT',
+      path: '/rest/v1/' + username + '/jobs/' + this.sessionId,
+      auth: username + ':' + accessKey,
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
     };
     var data = {
