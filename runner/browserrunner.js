@@ -149,6 +149,27 @@ BrowserRunner.prototype.done = function done(error) {
     return this.doneCallback(error, this);
   }
 
+  //Send the pass/fail info to sauce-labs if we are testing remotely
+  if(this.sessionId){
+    var username = this.options.sauce.username;
+    var accessKey = this.options.sauce.accessKey;
+    var httpOpts = {
+      hostname: "saucelabs.com",
+      method: "PUT",
+      path: "/rest/v1/" + username + "/jobs/" + this.sessionId,
+      auth: username + ":" + accessKey,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    var data = {
+      passed: (!error && this.stats.failing > 0 ? false : true)
+    };
+    var req = http.request(httpOpts);
+    req.write(JSON.stringify(data));
+    req.end();
+  }
+
   browser.quit(function(quitError) {
     if (quitError) {
       this.emitter.emit('log:warn', this.def, 'Failed to quit:', quitError.data || quitError);
