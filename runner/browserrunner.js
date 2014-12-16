@@ -9,6 +9,7 @@
  */
 var _     = require('lodash');
 var chalk = require('chalk');
+var http  = require('http');
 var wd    = require('wd');
 
 var CleanKill = require('./cleankill');
