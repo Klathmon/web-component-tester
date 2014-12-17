@@ -82,7 +82,7 @@ function ensureSauceTunnel(options, emitter, done) {
 function startSeleniumServer(options, emitter, done) {
   checkSeleniumEnvironment(function(error) {
     if (error) return done(error);
-    freeport(function(error, port) {
+    (function(error, port) {
       if (error) return done(error);
 
       var server = selenium({}, ['-port', port]);
@@ -106,12 +106,12 @@ function startSeleniumServer(options, emitter, done) {
         server.kill();
         done();
       });
-    });
+    }(null, 9000));
   });
 }
 
 function startStaticServer(options, emitter, done) {
-  freeport(function(error, port) {
+  (function(error, port) {
     if (error) return done(error);
 
     var app    = express();
@@ -148,7 +148,7 @@ function startStaticServer(options, emitter, done) {
     CleanKill.onInterrupt(function(done) {
       server.close();
       done();
-    });
+    }(null, 9000));
 
     emitter.emit('log:info',
       'Web server running on port', chalk.yellow(port),
