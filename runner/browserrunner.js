@@ -145,13 +145,8 @@ BrowserRunner.prototype.done = function done(error) {
 
   this.emitter.emit('browser-end', this.def, error, this.stats);
 
-  // Nothing to quit.
-  if (!this.sessionId) {
-    return this.doneCallback(error, this);
-  }
-
   //Send the pass/fail info to sauce-labs if we are testing remotely
-  if(this.sessionId){
+  if(this.options.remote){
     var username = this.options.sauce.username;
     var accessKey = this.options.sauce.accessKey;
     var httpOpts = {
@@ -164,11 +159,16 @@ BrowserRunner.prototype.done = function done(error) {
       }
     };
     var data = {
-      passed: (!error && this.stats.failing > 0 ? false : true)
+      passed: (this.stats.failing > 0 ? false : true)
     };
     var req = http.request(httpOpts);
     req.write(JSON.stringify(data));
     req.end();
+  }
+
+  // Nothing to quit.
+  if (!this.sessionId) {
+    return this.doneCallback(error, this);
   }
 
   browser.quit(function(quitError) {
