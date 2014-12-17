@@ -159,7 +159,7 @@ BrowserRunner.prototype.done = function done(error) {
       }
     };
     var data = {
-      passed: (!error && this.stats.failing > 0 ? false : true)
+      passed: (this.stats.failing > 0 ? false : true)
     };
     var req = http.request(httpOpts);
     req.write(JSON.stringify(data));
