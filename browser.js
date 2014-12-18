@@ -6781,9 +6781,7 @@ CLISocket.prototype.observe = function observe(runner) {
   }.bind(this));
 
   runner.on('childRunner start', function(childRunner) {
-    var childiFrame = document.querySelector('iframe.subsuite');
-    var iFrameWindow = (childiFrame.contentWindow || childiFrame.contentDocument);
-    this.emitEvent('sub-suite-start', iFrameWindow.WCT.share);
+    this.emitEvent('sub-suite-start', childRunner.share);
   }.bind(this));
 
   runner.on('childRunner end', function(childRunner) {
