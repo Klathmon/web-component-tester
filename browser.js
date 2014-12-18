@@ -6782,13 +6782,13 @@ CLISocket.prototype.observe = function observe(runner) {
 
   runner.on('childRunner start', function(childRunner) {
     var childiFrame = document.querySelector('iframe.subsuite');
-    var iFrameWindow = (iframeThing.contentWindow || iframeThing.contentDocument);
+    var iFrameWindow = (childiFrame.contentWindow || childiFrame.contentDocument);
     this.emitEvent('sub-suite-start', iFrameWindow.WCT.share);
   }.bind(this));
 
   runner.on('childRunner end', function(childRunner) {
     var childiFrame = document.querySelector('iframe.subsuite');
-    var iFrameWindow = (iframeThing.contentWindow || iframeThing.contentDocument);
+    var iFrameWindow = (childiFrame.contentWindow || childiFrame.contentDocument);
     this.emitEvent('sub-suite-end', iFrameWindow.WCT.share);
   }.bind(this));
 
