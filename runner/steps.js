@@ -82,7 +82,7 @@ function ensureSauceTunnel(options, emitter, done) {
 function startSeleniumServer(options, emitter, done) {
   checkSeleniumEnvironment(function(error) {
     if (error) return done(error);
-    freeport(function(error, port) {
+    (function(error, port) {
       if (error) return done(error);
 
       var server = selenium({}, ['-port', port]);
@@ -106,12 +106,12 @@ function startSeleniumServer(options, emitter, done) {
         server.kill();
         done();
       });
-    });
+    }(null, 9000));
   });
 }
 
 function startStaticServer(options, emitter, done) {
-  freeport(function(error, port) {
+  (function(error, port) {
     if (error) return done(error);
 
     var app    = express();
@@ -155,7 +155,7 @@ function startStaticServer(options, emitter, done) {
       'and serving from', chalk.magenta(options.root)
     );
     done(null, server);
-  });
+  }(null, 9001));
 }
 
 function runTests(options, emitter, done) {
